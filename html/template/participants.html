@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html class="grad-background">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">    
+        <title>HW1</title>
+        <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+        <style>
+            /* reference: https://www.w3schools.com/css/css3_gradients.asp 
+                          https://cssgradient.io/
+            */
+        
+        .grad-background {
+        
+            /* background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); */
+            /* background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet, red); */
+
+
+            /* Reference to this gradient animation: https://codepen.io/P1N2O/pen/pyBNzX */
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+          
+
+            
+        }
+
+        @keyframes gradient {
+	    0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+
+        #footer {
+            display: flex;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 6%;
+            color: black;
+            text-align: center;
+            align-items: center;
+            align-self: center;
+            align-content: center;
+            justify-content: center;
+            font-family: 'Comfortaa', cursive;
+            }
+        .footer-back {
+            background-color: rgba(255,255,255,.6);
+            
+        }
+        
+            
+        
+        #header {
+            
+            display: flex;
+            text-align: center;
+            margin: 0;
+            width: 100%;
+            color: black;
+            justify-content: space-between;
+            min-height: 80px;
+            font-family: 'Comfortaa', cursive;
+        }
+        .header-back {
+            background-color: rgba(255,255,255,.6);
+            
+        }
+        a:hover {
+            color: #8fd3f4 !important;
+        }
+        a{
+            text-decoration: none;
+        }
+        .a-text {
+            color: black;
+        }
+        .logo-style{
+            height: 50px;
+            width: 50px;
+            align-self: center;
+        }
+        .nav-style{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;            
+            width: 40%;
+            margin: 0 30px;
+            font-size: 17px;
+        }
+        nav ul li {
+            display: inline-block;
+        }
+        nav ul li a{
+            display: block;
+            
+            text-transform: uppercase;
+            padding: 10px;
+            margin: 0 10px;
+            position: relative;
+        }
+        .main-back{
+            background-color: rgba(255,255,255,.6);
+            margin-top: 10px;
+            margin-bottom: 5px;
+         
+            min-height: 750px;
+            max-height: 750px;
+            align-self: center;
+            align-items: center;
+            align-content: center;
+            overflow: auto;
+        }
+        html, body {
+            height: 95%;
+            display: block;
+        }
+        .styled-table {
+            border-collapse: collapse;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            justify-items: center;
+            justify-content: center;
+            justify-self: center;
+
+        }
+        .table-container {
+            width: 90%;
+            height: 100%;
+            justify-items: center;
+            justify-content: center;
+            justify-self: center;
+            margin: auto;
+        }
+        th, td {
+            text-align: center;
+            justify-items: center;
+        }
+        main {
+            font-family: 'Comfortaa', cursive;
+        }
+
+
+        main::-webkit-scrollbar {
+        width: 12px;             
+        }
+
+        main::-webkit-scrollbar-track {
+          
+        }
+
+        main::-webkit-scrollbar-thumb {
+        background-image: linear-gradient(180deg, #d0368a 0%, #708ad4 99%);
+        border-radius: 20px;      
+        border-radius: 100px;
+        box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
+        }
+
+
+        /* CSS: reference: https://getcssscan.com/css-buttons-examples */
+        .button-24 {
+        background: #FF4742;
+        border: 1px solid #FF4742;
+        border-radius: 6px;
+        box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+        box-sizing: border-box;
+        color: #FFFFFF;
+        cursor: pointer;
+        display: inline-block;
+        font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+        font-size: 16px;
+        font-weight: 800;
+        line-height: 16px;
+        min-height: 40px;
+        outline: 0;
+        padding: 12px 14px;
+        text-align: center;
+        text-rendering: geometricprecision;
+        text-transform: none;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: middle;
+        }
+
+        .button-24:hover,
+        .button-24:active {
+        background-color: initial;
+        background-position: 0 0;
+        color: #FF4742;
+        }
+
+        .button-24:active {
+        opacity: .5;
+        }
+        </style>
+    </head>
+    
+
+    <body>
+    
+        <header id="header" class="header-back">
+            <div style="display: flex; margin: 0 10px;">
+                <img class="logo-style" src="{{url_for('static', filename='logo.png')}}"><a style="margin-left: 10px; align-self: center;" class="a-text" href="" target="_blank"><h2>Random Selector</h2></a>
+            </div>
+                <nav class="nav-style">
+                <a class="a-text" href="{{ url_for('index') }}">Poller</a> 
+                <a class="a-text" href="{{ url_for('participants') }}">Participants</a> 
+                <a class="a-text" href="https://site.sds-techx.in/hw1-unit-testing/#0/">Instructions</a> 
+              </nav></header>
+    <main class="main-back">
+        
+        <div class="table-container">
+            <table class="styled-table" style="width:100%">
+                <h1 style="width: 100%; text-align: center;"> Participants </h1>
+                <thead>
+
+                    <tr>
+                        <th>Name</th>
+                        <th>Polled</th>
+                        <th>Correct</th>
+                        <th>Attempted</th>
+                        <th>Missing</th>
+                        <th>Excused</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for participant in participants %}
+                    <tr>
+                        <td>{{ participant[0] + " " + participant[1] }}</td>
+                        <td>{{ participant[2] }}</td>
+                        <td>{{ participant[3] }}</td>
+                        <td>{{ participant[4] }}</td>
+                        <td>{{ participant[5] }}</td>
+                        <td>{{ participant[6] }}</td>
+                        <td> <button class="button-24" role="button">Remove</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                
+                </tbody>
+            </table>
+        </div>
+
+
+    </main>
+    <hr>
+     <footer class="footer-back" id="footer">Made by: &nbsp<a class="a-text" href="https://www.linkedin.com/in/emmanuel-gonzalez-morales22/">Emmanuel Gonzalez Morales</a></footer>
+
+    </body>
+</html>
