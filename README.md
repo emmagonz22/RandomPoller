@@ -18,3 +18,29 @@ Below is an abbreviated enumeration of the requirements:
 | Working tests for all other behaviors                       | 20
 | Working test_random                                         | Bonus!!!
 
+# Dependencies to run the Flask/Jinja Application
+
+```
+Flask==1.1.2
+pytest==6.2.3
+pytest-cov==2.11.1
+Jinja2==2.11.3
+jsonpickle
+```
+
+# Dependencies for the command line application
+
+```
+Flask==1.1.2
+pytest==6.2.3
+pytest-cov==2.11.1
+Jinja2==2.11.3
+```
+
+# To run the Flask application
+```
+
+cd html 
+flask run --port 8080
+
+```
