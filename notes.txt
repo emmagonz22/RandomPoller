@@ -1,0 +1,9 @@
+Preview web application in Google cloud shell:
+
+https://cloud.google.com/shell/docs/using-web-preview
+
+
+
+Magic methods:
+
+https://www.tutorialsteacher.com/python/magic-methods-in-python#:~:text=Magic%20methods%20in%20Python%20are,class%20on%20a%20certain%20action.
