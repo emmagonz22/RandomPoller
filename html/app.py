@@ -89,25 +89,34 @@ def get_random_participant():
 
     return jsonpickle.encode(selected_participant)
 
+@app.route('/increment_participant_value/', methods=['GET', 'POST'])       
 def increment_participant_value(name, action):
     
-    if action == "polled":
+    participants = []
+    with open("../data/participants.csv", "r") as filecsv:
+        participant_csvfile = csv.reader(filecsv, delimiter=" ")
+        print(participant_csvfile)
+        for participant in participant_csvfile:
+            tmp_list = [participant[0]]
+            explode = participant[1].split(',')
+            tmp_list.extend(explode)
+            participants.append(tmp_list)
 
-        pass
-    elif action == "attempted":
+    for participant in participants:
+        if participant[0] + " " + participant[1] == name:
+            if action == "correct":
+                participant[3] = 1 + int(participant[3])
+            elif action == "attempted":
+                participant[4] = 1 + int(participant[4])
+            elif action == "excused":
+                participant[5] = 1 + int(participant[5])
+            participant[2] = 1 + int(participant[2])
 
-    pass
-    elif action == "polled":
-
-    pass
-    elif action == "polled":
-
-    pass
+    with open('../data/participants.csv', 'w') as writeFile:
+        writer = csv.writer(writeFile)
+        writer.writerows(participant)
     
-
-
-
-
+    return "Participant have been modified"
 
 if __name__ == '__main__':
 

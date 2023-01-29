@@ -27,6 +27,7 @@ def main():
                     poller.stop()
                     break
                 elif command == "m":
+                    poller.missing()
                     break
                 print("Unknown response")         
 

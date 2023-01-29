@@ -63,11 +63,8 @@
             background-color: rgba(255,255,255,.6);
             
         }
-        
             
-        
         #header {
-            
             display: flex;
             text-align: center;
             margin: 0;
@@ -178,9 +175,9 @@
         }
 
         /* 
-        GRADIENT BANNER DESIGN BY SIMON LURWER ON DRIBBBLE:
-        https://dribbble.com/shots/14101951-Banners
-        */
+            GRADIENT BANNER DESIGN BY SIMON LURWER ON DRIBBBLE:
+            https://dribbble.com/shots/14101951-Banners
+            */
         /* CARDS */
 
         #cards {
@@ -308,10 +305,26 @@
         }
         }
 
+
+        .execution-counter{
+            position: fixed;
+            display: flex;
+            font-family: 'Comfortaa', cursive;
+            justify-content: end;
+            text-align: end;
+            font-weight: bold;
+            font-size: x-large;
+            width: 100%;
+            bottom: 100px;
+            right: 100px;
+            align-items: center;
+            align-self: center;
+        }
         </style>
 
 
     <script> 
+    var execution_attempts = 0;
     function generateCard(){
         var card = document.getElementById("cardID");
         if (card.style.display === "none") {
@@ -343,6 +356,52 @@
         });
     }
  
+    function modifyParticipant( action){
+        var text = "test";
+        execution_attempts += 1;
+        document.getElementById("execution-counter-text").innerHTML = execution_attempts;
+
+        console.log(execution_attempts);
+        $(function() {
+            $('button#polled').on('click', function(e) {
+                e.preventDefault()
+                $.getJSON('/background_process_test',
+                    function(data) {
+                    console.log(data)
+                });
+            });
+            $('button#correct').on('click', function(e) {
+                e.preventDefault()
+                $.getJSON('/background_process_test',
+                    function(data) {
+                    console.log(data)
+                });
+            });
+            $('button#excused').on('click', function(e) {
+                e.preventDefault()
+                $.getJSON('/background_process_test',
+                    function(data) {
+                    console.log(data)
+                });
+            });
+            $('button#attempted').on('click', function(e) {
+                e.preventDefault()
+                $.getJSON('/background_process_test',
+                    function(data) {
+                    console.log(data)
+                });
+            });
+            
+        });
+
+    
+        var card = document.getElementById("cardID");
+        if (card.style.display === "none") {
+            card.style.display = "flex";
+        } else {
+            card.style.display = "none";
+        }
+    }
 
 
   </script>
@@ -357,7 +416,7 @@
                 <nav class="nav-style">
                 <a class="a-text" href="{{ url_for('index') }}">Poller</a> 
                 <a class="a-text" href="{{ url_for('participants') }}">Participants</a> 
-                <a class="a-text" href="#" onclick='window.open("https://site.sds-techx.in/hw1-unit-testing/#0");return false;'>Instructions</a> 
+                <a class="a-text" href="#" onclick='window.open("https://site.sds-techx.in/hw1-unit-testing/#0"); return false;'>Instructions</a> 
               </nav></header>
     <main class="main-back">
         <div class="width: 100%; text-align: end;">
@@ -370,34 +429,37 @@
 
             <h2 class="card__title">  Select 1 of the following options for the participant:     <div id="participant" >  </div> </h2>
             <!-- <div class="card__icon"><i class="fas fa-bolt"></i></div>  in case a icon is added-->
-           
-            <div class="card__apply" >              
-             
+            <form action="{{ url_for('get_random_participant') }}" method="post" id="participant-form">
+                    <div class="card__apply" >              
+                    
+                        <div class="card__inner_elements">
+                            <div id="polled" >   </div>
+                            <button class="card__btn" onclick="modifyParticipant('polled')"> Polled  </button>
+                        </div>
+                    
+                
+                        <div class="card__inner_elements" >
+                            <div id="correct" >  </div>
+                            <button class="card__btn" onclick="modifyParticipant('correct')"> Correct  </button>
+                        </div>
+                    
 
-                <div class="card__inner_elements">
-                    <div id="polled" >   </div>
-                    <button class="card__btn"> Polled  </button>
-                </div>
-              
-         
-                <div class="card__inner_elements" >
-                    <div id="correct" >  </div>
-                    <button class="card__btn" > Correct  </button>
-                </div>
-              
+                        <div class="card__inner_elements" >
+                            <div id="attemped" >   </div>
+                            <button class="card__btn"  onclick="modifyParticipant('attemped')"> Attemped </button>
+                        </div>
+                    
+                        <div class="card__inner_elements">
+                            <div id="excused" >   </div>
+                            <button class="card__btn" onclick="modifyParticipant('excused')"> Excused  </button>
+                        </div>
 
-                <div class="card__inner_elements" >
-                     <div id="attemped" >   </div>
-                    <button class="card__btn" > Attemped </button>
-                </div>
-              
-                <div class="card__inner_elements">
-                    <div id="excused" >   </div>
-                   <button class="card__btn" > Excused  </button>
-               </div>
+                    </div>
 
-              </div>
+            </form>
         </div>
+
+        <div class="execution-counter">Total: &nbsp <p id="execution-counter-text">0</p></div>
     </main>
     <hr>
      <footer class="footer-back" id="footer">Made by: &nbsp<a class="a-text" href="https://www.linkedin.com/in/emmanuel-gonzalez-morales22/">Emmanuel Gonzalez Morales</a></footer>
