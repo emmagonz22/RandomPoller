@@ -32,7 +32,7 @@ class Poller:
     def __init__(self, filename: str):
         self.filename : str = filename
         self.participants = []
-        self.execution_attempteds = 0
+        self.execution_attempts = 0
         self.selected_participant = None
     def __enter__(self):
         if os.stat(self.filename).st_size == 0:
@@ -42,7 +42,7 @@ class Poller:
                 participant_csvfile = csv.reader(filecsv, delimiter=" ")
           
                 for participant in participant_csvfile:
-                    print(participant)
+                
                     explode_line = participant[1].split(',')                
                     self.participants.append(  Participant(f"{participant[0]} {explode_line[0]}",int(explode_line[1]),int(explode_line[2]), int(explode_line[3]), int(explode_line[4]) ))
         return self
@@ -80,7 +80,7 @@ class Poller:
         if (len(qualified_participants) > 0):
             self.random_index = random.randint(0,len(qualified_participants)-1)
             self.selected_participant = qualified_participants[self.random_index]
-            self.execution_attempteds += 1
+            self.execution_attempts += 1
         else:
             self.selected_participant = None
         
@@ -101,7 +101,6 @@ class Poller:
         Exception: Index of participant not found.
     """
     def attempted(self):
-        print(self.random_index, self.participants[self.random_index])
         if self.random_index != -1:
             self.selected_participant.increase_attempted_counter()
             self.selected_participant.increase_polled_counter()
@@ -124,9 +123,7 @@ class Poller:
     def stop(self): 
         sys.exit("End of program")
     def total(self):
-  
-        for participant in self.participants:
-            print(str(participant))
+        print(self.execution_attempts)
 
 p = Poller("./data/participants.csv")
 p.total()
