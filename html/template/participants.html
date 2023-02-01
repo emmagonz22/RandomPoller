@@ -44,45 +44,7 @@
             background-position: 0% 50%;
         }
     }
-
-
-        #footer {
-            display: flex;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 6%;
-            color: black;
-            text-align: center;
-            align-items: center;
-            align-self: center;
-            align-content: center;
-            justify-content: center;
-            font-family: 'Comfortaa', cursive;
-            }
-        .footer-back {
-            background-color: rgba(255,255,255,.6) !important;
-            
-        }
-        
-            
-        
-        #header {
-            
-            display: flex;
-            text-align: center;
-            margin: 0;
-            width: 100%;
-            color: black;
-            justify-content: space-between;
-            min-height: 80px;
-            font-family: 'Comfortaa', cursive !important;
-        }
-        .header-back {
-            background-color: rgba(255,255,255,.6);
-            
-        }
+    
         a:hover {
             color: #8fd3f4 !important;
         }
@@ -92,30 +54,7 @@
         .a-text {
             color: black;
         }
-        .logo-style{
-            height: 50px;
-            width: 50px;
-            align-self: center;
-        }
-        .nav-style{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;            
-            width: 40%;
-            margin: 0 30px !important;
-            font-size: 17px;
-        }
-        nav ul li {
-            display: inline-block;
-        }
-        nav ul li a{
-            display: block;
-            
-            text-transform: uppercase;
-            padding: 10px;
-            margin: 0 10px;
-            position: relative;
-        }
+
         #main-back{
             background-color: rgba(255,255,255,.6);
             margin-top: 10px !important;
@@ -285,15 +224,8 @@
 
     <body class="grad-background">
     
-        <header id="header" class="header-back">
-            <div style="display: flex; margin: 0 10px;">
-                <img class="logo-style" src="{{url_for('static', filename='logo.png')}}"><a style="margin-left: 10px; align-self: center;" class="a-text" href="" target="_blank"><h2>Random Selector</h2></a>
-            </div>
-                <nav class="nav-style">
-                <a class="a-text" href="{{ url_for('index') }}">Poller</a> 
-                <a class="a-text" href="{{ url_for('participants') }}">Participants</a> 
-                <a class="a-text" onclick='window.open("https://site.sds-techx.in/hw1-unit-testing/#0");return false;'>Instructions</a> 
-              </nav></header>
+        {% include 'header.html' %}
+
     <main id="main-back">
         
         <div class="table-container">
@@ -383,7 +315,6 @@
 
     </main>
    <hr>
-     <footer class="footer-back" id="footer">Made by: &nbsp<a class="a-text" href="https://www.linkedin.com/in/emmanuel-gonzalez-morales22/">Emmanuel Gonzalez Morales</a></footer>
-
+    {% include 'footer.html' %}
     </body>
 </html>
