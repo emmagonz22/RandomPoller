@@ -11,6 +11,7 @@ class Participant:
         self.attempted_counter : int = attempted_counter
         self.correct_counter : int = correct_counter
         self.excused_counter : int = excused_counter
+   
       
     def __str__(self):
         return f"{self.name},{self.polled_counter},{self.correct_counter},{self.attempted_counter},{self.excused_counter}"
@@ -34,6 +35,7 @@ class Poller:
         self.participants = []
         self.execution_attempts = 0
         self.selected_participant = None
+        self.continue_iter: bool = False
     def __enter__(self):
         if os.stat(self.filename).st_size == 0:
             raise ValueError("File is empty")
@@ -64,6 +66,8 @@ class Poller:
         return self
     def __next__(self): #Fix to select random participant
 
+        if(self.continue_iter):
+            raise StopIteration()
         polled_num_set = set()
         for participant in self.participants:
            
@@ -121,13 +125,13 @@ class Poller:
         else:
             raise Exception("Index of participant not found")
     def stop(self): 
-        sys.exit("End of program")
-    def total(self):
-        print(self.execution_attempts)
+        self.continue_iter = True
+        print("End of program")
+    """ Returns number of time that __next__ was called.
+    
+    """
+    def total(self): 
 
-p = Poller("./data/participants.csv")
-p.total()
+        print(f"The total number of person called: {self.execution_attempts}")
 
-'''
 
-'''
