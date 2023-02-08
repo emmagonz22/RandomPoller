@@ -11,6 +11,7 @@ class Participant:
         self.attempted_counter : int = attempted_counter
         self.correct_counter : int = correct_counter
         self.excused_counter : int = excused_counter
+   
       
     def __str__(self):
         return f"{self.name},{self.polled_counter},{self.correct_counter},{self.attempted_counter},{self.excused_counter}"
@@ -38,6 +39,8 @@ class Poller:
         self.execution_attempts = 0
         self.selected_participant = None
         self.open_file = open_file
+        self.continue_iter: bool = True
+        
     def __enter__(self):
         if os.stat(self.filename).st_size == 0:
             raise ValueError("File is empty")
@@ -67,7 +70,9 @@ class Poller:
         self.random_index = -1
         return self
     def __next__(self): #Fix to select random participant
-        print(self.participants)
+
+        if not self.continue_iter:
+            raise StopIteration()
         polled_num_set = set()
         for participant in self.participants:
             polled_num_set.add(int(participant.polled_counter))
@@ -86,14 +91,12 @@ class Poller:
             self.execution_attempts += 1
         else:
             self.selected_participant = None
-        
+    
         return self.selected_participant
     def correct(self):
-        if self.random_index != -1:
-            self.selected_participant.increase_correct_counter()
-            self.random_index = -1
-        else:
-            raise Exception("Index of participant not found")
+ 
+        self.selected_participant.increase_correct_counter()
+
     
     """Increment the Participant correct value by one.
 
@@ -103,31 +106,22 @@ class Poller:
         Exception: Index of participant not found.
     """
     def attempted(self):
-        if self.random_index != -1:
-            self.selected_participant.increase_attempted_counter()
-            self.random_index = -1
-        else:
-            raise Exception("Index of participant not found")
+        self.selected_participant.increase_attempted_counter()
+
     def excused(self):
-        if self.random_index != -1:
-            self.selected_participant.increase_excused_counter()
-            self.random_index = -1
-        else:
-            raise Exception("Index of participant not found")
+        self.selected_participant.increase_excused_counter()
+     
     def missing(self):
-        if self.random_index != -1:
-            self.selected_participant.increase_polled_counter()
-            self.random_index = -1
-        else:
-            raise Exception("Index of participant not found")
+        self.selected_participant.increase_polled_counter()
+
     def stop(self): 
-        sys.exit("End of program")
-    def total(self):
-        print(self.execution_attempts)
+        self.continue_iter = False
+        print("End of program")
+    """ Returns number of time that __next__ was called.
+    
+    """
+    def total(self): 
+        print(f"The total number of person called: {self.execution_attempts}")
+        return self.execution_attempts
 
-p = Poller("./data/participants.csv")
-p.total()
 
-'''
-
-'''

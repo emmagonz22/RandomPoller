@@ -4,6 +4,18 @@ from subprocess import run
 from mock_open import mock_open
 
 
+
+"""
+
+Task to  do
+
+keep track dont call 
+Add flag to command line to commit like --save
+Focus on unit test --priotity
+write integration test
+
+"""
+
 parser = ArgumentParser(prog = "RandoPoll",
                     description = "What the program does")
 parser.add_argument("filename")
@@ -14,7 +26,7 @@ def main():
     with Poller(args.filename, mock_open(["Juan Perez,1,0,1,0"])) as poller:
         for participant in poller:
             while True:
-                print("%s: (A)nswered (C)orrect (E)xcused (M)issing (Q)uit" % participant)
+                print("%s: (A)nswered (C)orrect (E)xcused (M)issing (T)otal (Q)uit" % participant)
                 command = input().lower()
                 if command == "a":
                     poller.attempted()
@@ -30,6 +42,9 @@ def main():
                     break
                 elif command == "m":
                     poller.missing()
+                    break
+                elif command == "t":
+                    poller.total()
                     break
                 print("Unknown response")         
 

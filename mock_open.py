@@ -1,4 +1,4 @@
-def mock_open(content=["Juan Perez,1,0,1,0"]):
+def mock_open(content):
     mock_content = content
     class Opener:
         def __init__(self, filename, mode=""):

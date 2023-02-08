@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <style>
+        /* reference: https://www.w3schools.com/css/css3_gradients.asp 
+                    https://cssgradient.io/
+        */
+        
+        .grad-background {
+        
+            /* background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); */
+            /* background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet, red); */
+
+
+            /* Reference to this gradient animation: https://codepen.io/P1N2O/pen/pyBNzX */
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+          
+
+            
+        }
+
+        @keyframes gradient {
+	    0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+            
+        #header {
+            display: flex;
+            text-align: center;
+            margin: 0;
+            width: 100%;
+            color: black;
+            justify-content: space-between;
+            min-height: 80px;
+            font-family: 'Comfortaa', cursive;
+        }
+        .header-back {
+            background-color: rgba(255,255,255,.6);
+            
+        }
+        a:hover {
+            color: #8fd3f4 !important;
+        }
+        a{
+            text-decoration: none;
+        }
+        .a-text {
+            color: black;
+        }
+        .logo-style{
+            height: 50px;
+            width: 50px;
+            align-self: center;
+        }
+        .nav-style{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;            
+            width: 40%;
+            margin: 0 30px;
+            font-size: 17px;
+        }
+        nav ul li {
+            display: inline-block;
+        }
+        nav ul li a{
+            display: block;
+            
+            text-transform: uppercase;
+            padding: 10px;
+            margin: 0 10px;
+            position: relative;
+        }
+    </style>
+</head>
+
+
+<body>
+    <header id="header" class="header-back">
+        <div style="display: flex; margin: 0 10px;">
+            <img class="logo-style" src="{{url_for('static', filename='logo.png')}}"><a style="margin-left: 10px; align-self: center;" class="a-text" href="./"><h2>Random Selector</h2></a>
+        </div>
+            <nav class="nav-style">
+            <a class="a-text" href="{{ url_for('index') }}">Poller</a> 
+            <a class="a-text" href="{{ url_for('participants') }}">Participants</a> 
+            <a class="a-text" href="#" onclick='window.open("https://site.sds-techx.in/hw1-unit-testing/#0"); return false;'>Instructions</a> 
+          </nav></header>
+</body>
+
+</html>
