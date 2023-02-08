@@ -26,7 +26,7 @@ args = parser.parse_args()
 print(args)
 def main():
     print(f"Welcome to RandoPoll if you want to commit the participant.csv add the flag -c following with the message and -p to push to remote repo after quiting the program")
-    with Poller(args.filename, mock_open(["Juan Perez,1,0,1,0"])) as poller:
+    with Poller(args.filename) as poller:
         for participant in poller:
             while True:
                 print("%s: (A)nswered (C)orrect (E)xcused (M)issing (T)otal (Q)uit" % participant)
