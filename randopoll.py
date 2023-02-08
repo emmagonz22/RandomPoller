@@ -43,7 +43,7 @@ def main():
                 elif command == "q":
                     if args.commit_message:
                         #subprocess call
-                        run(["git", "add", '.'])
+                        run(["git", "add", './data/participants.csv'])
                         run(["git", "commit", "-m", args.commit_message])
                         if args.push:
                             run(["git", "pull"]) #Update branch before pushing
