@@ -17,28 +17,32 @@ class Participant:
 
     def increase_attempted_counter(self):
         self.attempted_counter += 1
+        self.polled_counter += 1
 
     def increase_correct_counter(self):
         self.correct_counter += 1
-    
+        self.polled_counter += 1
+
     def increase_excused_counter(self):
         self.excused_counter += 1
+        self.polled_counter += 1
 
     def increase_polled_counter(self):
         self.polled_counter += 1
 
 
 class Poller:
-    def __init__(self, filename: str):
+    def __init__(self, filename: str, open_file = open):
         self.filename : str = filename
         self.participants = []
         self.execution_attempts = 0
         self.selected_participant = None
+        self.open_file = open_file
     def __enter__(self):
         if os.stat(self.filename).st_size == 0:
             raise ValueError("File is empty")
         else:
-            with open(self.filename, "r") as filecsv:
+            with self.open_file(self.filename, "r") as filecsv:
                 participant_csvfile = csv.reader(filecsv, delimiter=" ")
           
                 for participant in participant_csvfile:
@@ -53,8 +57,8 @@ class Poller:
         for participant in self.participants:
             participant_lst = [participant.name, participant.polled_counter, participant.correct_counter, participant.attempted_counter, participant.excused_counter]
             formated_list.append(participant_lst)
-
-        with open(self.filename, 'w') as writeFile:
+        ##
+        with self.open_file(self.filename, 'w') as writeFile:
                 writer = csv.writer(writeFile)
                 writer.writerows(formated_list)
 
@@ -63,12 +67,11 @@ class Poller:
         self.random_index = -1
         return self
     def __next__(self): #Fix to select random participant
-
+        print(self.participants)
         polled_num_set = set()
         for participant in self.participants:
-           
             polled_num_set.add(int(participant.polled_counter))
-                
+  
         min_poll_num = min(polled_num_set)
       
         qualified_participants = []
@@ -88,7 +91,6 @@ class Poller:
     def correct(self):
         if self.random_index != -1:
             self.selected_participant.increase_correct_counter()
-            self.selected_participant.increase_polled_counter()
             self.random_index = -1
         else:
             raise Exception("Index of participant not found")
@@ -103,14 +105,12 @@ class Poller:
     def attempted(self):
         if self.random_index != -1:
             self.selected_participant.increase_attempted_counter()
-            self.selected_participant.increase_polled_counter()
             self.random_index = -1
         else:
             raise Exception("Index of participant not found")
     def excused(self):
         if self.random_index != -1:
             self.selected_participant.increase_excused_counter()
-            self.selected_participant.increase_polled_counter()
             self.random_index = -1
         else:
             raise Exception("Index of participant not found")
