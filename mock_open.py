@@ -1,6 +1,12 @@
 def mock_open(content):
     mock_content = content
     class Opener:
+        """Mock open function for dependency injection
+
+        Attributes:
+            filename: Mock file name if the open function
+            mode: Mock mode of the open funcition
+        """
         def __init__(self, filename, mode=""):
             self.mode = mode
 

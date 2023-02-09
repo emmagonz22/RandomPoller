@@ -29,11 +29,11 @@ def test_enter_poller():
 def test_poller_iter_next():
 
     with Poller("./data/participants.csv", mock_open(["Juan Perez,1,0,1,0", "Maria Rosa,5,3,0,2", "Danny Mek,2,0,2,0"])) as poller:
-        minimum_polled = poller.participants[0].polled_counter
+        minimum_polled = poller.participants[0].poll_counter
         for participant in poller.participants:
-            if participant.polled_counter < minimum_polled:
-                minimum_polled = participant.polled_counter 
-        assert next(poller).polled_counter == minimum_polled
+            if participant.poll_counter < minimum_polled:
+                minimum_polled = participant.poll_counter 
+        assert next(poller).poll_counter == minimum_polled
 
 def test_poller_correct():
     with Poller("./data/participants.csv", mock_open(["Juan Perez,1,0,1,0", "Maria Rosa,5,3,0,2", "Danny Mek,2,0,2,0"])) as poller:

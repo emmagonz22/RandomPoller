@@ -5,17 +5,6 @@ from mock_open import mock_open
 
 
 
-"""
-
-Task to  do
-
-keep track dont call 
-Add flag to command line to commit like --save
-Focus on unit test --priotity
-write integration test
-
-"""
-
 parser = ArgumentParser(prog = "RandoPoll",
                     description = "Select a random participant from the participants.csv with the lowest poll")
 parser.add_argument("filename")

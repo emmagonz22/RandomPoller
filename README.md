@@ -39,8 +39,25 @@ Jinja2==2.11.3
 
 # To run the Flask application
 ```
-
 cd html 
 flask run --port 8080
+```
 
+# To run do:
+```
+cd hw1
+pytest
+```
+
+#To run the command-line tool do:
+```
+python randopoll.py ./data/participants.csv
+```
+#To commit the changes in the execution do
+```
+python randopoll.py ./data/participants.csv -c "Commit message"
+```
+#To commit the changes and push in the execution do
+```
+python randopoll.py ./data/participants.csv  -c "Commit message" -p
 ```
