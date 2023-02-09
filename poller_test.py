@@ -18,14 +18,29 @@ from mock_open import mock_open
 def test_participant(participants, expected):
     assert str(participants) == expected
 
+"""
+    The directory in the Poller class (./data/participants.csv) is use as a placeholder but is not affecting the result
+"""
 ## Verify the participants list is correct
 def test_enter_poller():
     with Poller("./data/participants.csv", mock_open(["Juan Perez,1,0,1,0", "Maria Rosa,5,3,0,2", "Danny Mek,2,0,2,0"])) as poller:
         participants_list = [str(participant) for participant in  poller.participants]
         assert participants_list ==  [str(Participant("Juan Perez",1,0,1,0)),str(Participant("Maria Rosa",5,3,0,2)),str(Participant("Danny Mek",2,0,2,0))]
 
-#def test_exit_poller():
-
+def test_exit_poller():
+    participant_lst = []
+    with Poller("./data/participants.csv", mock_open(["Juan Perez,1,0,1,0", "Maria Rosa,5,3,0,2", "Danny Mek,2,0,2,0"])) as poller:
+        #Make a change in the participant list
+        next(poller)
+        poller.correct()
+        participant_lst = [str(participant) for participant in  poller.participants]
+       
+    with Poller("./data/participants.csv", mock_open(participant_lst)) as poller:
+        #Test if the new generate list is the same as the previous attempt
+        #This is test to chekc if the __exit__ succesfully overwrite the file
+        #its comparing the string of the object because the memory reference of the actual objects change
+        assert participant_lst == [str(participant) for participant in  poller.participants]
+    
 def test_poller_iter_next():
 
     with Poller("./data/participants.csv", mock_open(["Juan Perez,1,0,1,0", "Maria Rosa,5,3,0,2", "Danny Mek,2,0,2,0"])) as poller:
