@@ -88,14 +88,12 @@ def get_random_participant():
         selected_participant = "There is not participant that qualifies"
 
     return jsonpickle.encode(selected_participant)
-
-@app.route('/increment_participant_value/', methods=['GET', 'POST'])       
+@app.route('/increment_participant_value/<participant>/<action>', methods=['GET', 'POST'])    
 def increment_participant_value(name, action):
-    
+    print("Increment participant", name , action)
     participants = []
     with open("../data/participants.csv", "r") as filecsv:
         participant_csvfile = csv.reader(filecsv, delimiter=" ")
-        print(participant_csvfile)
         for participant in participant_csvfile:
             tmp_list = [participant[0]]
             explode = participant[1].split(',')

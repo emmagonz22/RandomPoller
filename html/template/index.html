@@ -266,6 +266,20 @@
 
 
     <script> 
+    // Prevent form from refreshing
+    $(document).on('submit','#participant-form',function(e)
+                    {
+        e.preventDefault();
+        $.ajax({
+            data:{
+                todo:$("#todo").val()
+            },
+            success:function()
+            {
+                alert('Participant updated');
+            }
+        })
+    });
     var execution_attempts = 0;
     function generateCard(){
         var card = document.getElementById("cardID");
@@ -298,42 +312,28 @@
         });
     }
  
-    function modifyParticipant( action){
+    function modifyParticipant(action){
         var text = "test";
         execution_attempts += 1;
         document.getElementById("execution-counter-text").innerHTML = execution_attempts;
-
-        console.log(execution_attempts);
+        name = document.getElementById("participant").innerHTML;
         $(function() {
-            $('button#polled').on('click', function(e) {
-                e.preventDefault()
-                $.getJSON('/background_process_test',
-                    function(data) {
-                    console.log(data)
-                });
+      
+
+
+            /*
+                TOFO: Communicate the button that increase the poll with Flask
+            */
+            $('polled_button').on('click', function(e) {
+            e.preventDefault()
+            $.getJSON(`/increment_participant_value/${name}/${action}`,
+                function(data) {
+                console.log("DATA")
+                console.log(data)
             });
-            $('button#correct').on('click', function(e) {
-                e.preventDefault()
-                $.getJSON('/background_process_test',
-                    function(data) {
-                    console.log(data)
-                });
-            });
-            $('button#excused').on('click', function(e) {
-                e.preventDefault()
-                $.getJSON('/background_process_test',
-                    function(data) {
-                    console.log(data)
-                });
-            });
-            $('button#attempted').on('click', function(e) {
-                e.preventDefault()
-                $.getJSON('/background_process_test',
-                    function(data) {
-                    console.log(data)
-                });
-            });
-            
+        });
+          
+     
         });
 
     
@@ -365,12 +365,12 @@
 
             <h2 class="card__title">  Select 1 of the following options for the participant:     <div id="participant" >  </div> </h2>
             <!-- <div class="card__icon"><i class="fas fa-bolt"></i></div>  in case a icon is added-->
-            <form style="width: 100%;" action="{{ url_for('get_random_participant') }}" method="post" id="participant-form">
+            <form style="width: 100%;" id="participant-form">
                     <div class="card__apply" >              
                     
                         <div class="card__inner_elements">
                             <div id="polled" >   </div>
-                            <button class="card__btn" onclick="modifyParticipant('polled')"> Polled  </button>
+                            <button id="polled_button" class="card__btn" onclick="modifyParticipant('polled')"> Polled  </button>
                         </div>
                     
                 
