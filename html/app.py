@@ -68,7 +68,9 @@ def get_random_participant():
     polled_num_set = set()
     with open("../data/participants.csv", "r") as filecsv:
         participant_csvfile = csv.reader(filecsv, delimiter=" ")
+        
         for participant in participant_csvfile:
+            print("Participant: ",participant)
             tmp_list = [participant[0]]
             explode = participant[1].split(',')
             tmp_list.extend(explode)
@@ -88,19 +90,28 @@ def get_random_participant():
         selected_participant = "There is not participant that qualifies"
 
     return jsonpickle.encode(selected_participant)
-@app.route('/increment_participant_value/<participant>/<action>', methods=['GET', 'POST'])    
-def increment_participant_value(name, action):
+
+@app.route('/increment_participant_value/', methods=['GET', 'POST'])   
+def increment_participant_value():
+
+    name = request.form["participant-input"]
+    action = request.form["submit-participant"]
+
+    
     print("Increment participant", name , action)
+
     participants = []
     with open("../data/participants.csv", "r") as filecsv:
         participant_csvfile = csv.reader(filecsv, delimiter=" ")
         for participant in participant_csvfile:
+            print(participant)
             tmp_list = [participant[0]]
             explode = participant[1].split(',')
             tmp_list.extend(explode)
             participants.append(tmp_list)
 
     for participant in participants:
+        print(participant)
         if participant[0] + " " + participant[1] == name:
             if action == "correct":
                 participant[3] = 1 + int(participant[3])
@@ -109,12 +120,22 @@ def increment_participant_value(name, action):
             elif action == "excused":
                 participant[5] = 1 + int(participant[5])
             participant[2] = 1 + int(participant[2])
+        print(participant)
+    print(participants)
 
+    formated_list = []
+
+    for participant in participants:
+        formated_list.append( [ participant[0] + " " + participant[1] , participant[2], participant[3], participant[4], participant[5]])
+    #Format list for the csv
+
+    print(formated_list)
     with open('../data/participants.csv', 'w') as writeFile:
         writer = csv.writer(writeFile)
-        writer.writerows(participant)
-    
-    return "Participant have been modified"
+        writer.writerows(formated_list)
+
+
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
 

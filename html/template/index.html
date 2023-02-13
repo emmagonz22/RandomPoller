@@ -10,7 +10,6 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-
         <style>
         /* reference: https://www.w3schools.com/css/css3_gradients.asp 
                     https://cssgradient.io/
@@ -202,7 +201,7 @@
         
             display: flex;
             align-self: center;
-            height: 100%;
+            height: 100px;
             width: 100%;
             justify-content: center;
         
@@ -265,22 +264,22 @@
         </style>
 
 
-    <script> 
-    // Prevent form from refreshing
-    $(document).on('submit','#participant-form',function(e)
-                    {
-        e.preventDefault();
-        $.ajax({
-            data:{
-                todo:$("#todo").val()
-            },
-            success:function()
-            {
-                alert('Participant updated');
-            }
-        })
-    });
-    var execution_attempts = 0;
+    <script type="text/javascript"> 
+
+    function init(){
+
+        if(!localStorage.getItem('execution_counter')) {
+            localStorage.setItem("execution_counter", 0);
+        }
+
+        
+        document.getElementById("execution-counter-text").innerHTML = localStorage.getItem("execution_counter");
+
+    }
+
+    window.onload = function() {
+        init();
+    };
     function generateCard(){
         var card = document.getElementById("cardID");
         if (card.style.display === "none") {
@@ -299,6 +298,7 @@
                 data: JSON.stringify({ jsdata: text }),
                 success: function(response) {
                     $("#participant").html(response[0] + " " + response[1]);
+                    $("#participant-input").val(response[0] + " " + response[1]);
                     $("#polled").html(response[2]);
                     $("#correct").html(response[3]);
                     $("#attemped").html(response[4]);
@@ -312,37 +312,13 @@
         });
     }
  
-    function modifyParticipant(action){
-        var text = "test";
-        execution_attempts += 1;
-        document.getElementById("execution-counter-text").innerHTML = execution_attempts;
-        name = document.getElementById("participant").innerHTML;
-        $(function() {
-      
+    function modifyParticipant(){
 
-
-            /*
-                TOFO: Communicate the button that increase the poll with Flask
-            */
-            $('polled_button').on('click', function(e) {
-            e.preventDefault()
-            $.getJSON(`/increment_participant_value/${name}/${action}`,
-                function(data) {
-                console.log("DATA")
-                console.log(data)
-            });
-        });
-          
-     
-        });
-
+        localStorage.setItem("execution_counter", parseInt(localStorage.getItem("execution_counter")) + 1);
+        document.getElementById("execution-counter-text").innerHTML = localStorage.getItem("execution_counter");
+        console.log("Attempt number: " + localStorage.getItem("execution_counter"))
     
-        var card = document.getElementById("cardID");
-        if (card.style.display === "none") {
-            card.style.display = "flex";
-        } else {
-            card.style.display = "none";
-        }
+
     }
 
 
@@ -361,33 +337,32 @@
 
 
         <div id="cardID" class="card card-1" style="display: none;">
-            <!-- <p class="card__exit"><i class="fas fa-times"></i></p> in case an exit button is added --> 
 
-            <h2 class="card__title">  Select 1 of the following options for the participant:     <div id="participant" >  </div> </h2>
-            <!-- <div class="card__icon"><i class="fas fa-bolt"></i></div>  in case a icon is added-->
-            <form style="width: 100%;" id="participant-form">
-                    <div class="card__apply" >              
+            <form style="width: 100%;" id="participant-form" action="{{ url_for('increment_participant_value') }}" method="POST">
+                <h2 class="card__title">  Select 1 of the following options for the participant: <div id="participant" name="participant"> </div>  <input id="participant-input" name="participant-input" type="hidden">  </h2>
+
+                <div class="card__apply" >              
                     
                         <div class="card__inner_elements">
                             <div id="polled" >   </div>
-                            <button id="polled_button" class="card__btn" onclick="modifyParticipant('polled')"> Polled  </button>
+                            <button id="polled_button" name="submit-participant" type="submit" class="card__btn" value="polled" onclick="modifyParticipant()"> Polled  </button>
                         </div>
                     
                 
                         <div class="card__inner_elements" >
                             <div id="correct" >  </div>
-                            <button class="card__btn" onclick="modifyParticipant('correct')"> Correct  </button>
+                            <button class="card__btn" name="submit-participant" type="submit" value="correct" onclick="modifyParticipant()"> Correct  </button>
                         </div>
                     
 
                         <div class="card__inner_elements" >
                             <div id="attemped" >   </div>
-                            <button class="card__btn"  onclick="modifyParticipant('attemped')"> Attemped </button>
+                            <button class="card__btn" name="submit-participant" type="submit" value="attempted" onclick="modifyParticipant()"> Attemped </button>
                         </div>
                     
                         <div class="card__inner_elements">
                             <div id="excused" >   </div>
-                            <button class="card__btn" onclick="modifyParticipant('excused')"> Excused  </button>
+                            <button class="card__btn" name="submit-participant" type="submit" value="excused" onclick="modifyParticipant()"> Excused  </button>
                         </div>
 
                     </div>
