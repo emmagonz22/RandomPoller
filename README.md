@@ -1,3 +1,7 @@
+# Random Poller 🎲 
+
+### This project was originally homework from the Google Tech Exchange Software Development Studio 2023; below are the requirements for the HW. Additionally, from these requirements, I created a webapp to add more interactivity to the Console application.
+
 # Homework 1
 
 Refer to the directions [here](https://site.sds-techx.in/hw1-unit-testing/#0) for how to complete this assignment.
